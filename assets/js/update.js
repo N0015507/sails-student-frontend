@@ -27,8 +27,6 @@
  *
  * 10. Make the color of the error text red
  *
- *
- *
  * Here's the documentation you need:
  * https://jqueryvalidation.org/validate/
  * https://jqueryvalidation.org/documentation/#link-list-of-built-in-validation-methods
@@ -44,7 +42,63 @@
 
    $(function(){
 
-    //code goes here
+     $('#employeeId').selectpicker({
+       style: 'btn-info',
+       size: 10,
+       liveSearch: true,
+       header: 'Select a student'
+     });
+
+     $("#updateStudentForm").validate({
+     errorClass: "alert alert-danger",
+     rules: {
+      first_name: {
+         required: true,
+         minlength: 2
+      },
+      last_name: {
+         required: true,
+         minlength: 2
+      },
+      start_date: {
+         required: true,
+         dateISO: true
+      }
+     },
+     messages: {
+      first_name: {
+         required: "Please enter your first namezzz",
+         minlength: jQuery.validator.format("At least {0} characters required!")
+      },
+      last_name: {
+         required: "Please enter your last name",
+         minlength: jQuery.validator.format("At least {0} characters required!")
+      },
+      start_date: {
+         required: "Please enter a start date",
+         dateISO: "Please add a date in yyyy-mm-dd format"
+      },
+     }
+     });
+      //alternativley
+      $("#updateStudentForm :input").prop('disabled', true);
+      //$(".form-control").prop('disabled', true);
+      //$(".btn-default").prop('disabled', true);
+
+      $("#employeeId").change(function(){
+        //$(".form-control").prop('disabled', false);
+        //$(".btn-default").prop('disabled', false);
+        $("#updateStudentForm :input").prop('disabled', false);
+        $.get("http://localhost:1337/student/" + $(this).val(), function (data) {
+             // reset form values from json object
+             $.each(data, function (name, val) {
+                 var $el = $('[name="' + name + '"]');
+                 var type = $el.attr('type');
+                 $el.val(val);
+              })
+         });
+     })
+
 
    })
 

@@ -57,37 +57,40 @@ module.exports = {
    /**
    * `StudentController.update()`
    */
-  update: function (req, res) {
+   update: function (req, res) {
 
-    if(req.method != "POST"){
+       if(req.method != "POST"){
 
-      client.get(endpoint, function (data, response) {
-        return res.view('update', {students: data});
-      }).on('error', function (err) {
-          return res.view('update', {error: { message: "There was an error getting the students"}});
-      });
+         client.get(endpoint, function (data, response) {
+           return res.view('update', {students: data});
+         }).on('error', function (err) {
+             return res.view('update', {error: { message: "There was an error getting the students"}});
+         });
 
-    }else{
+       }else{
 
-      var args = {
-          data: req.body,
-          headers: { "Content-Type": "application/json" }
-      };
+         let studentId = req.body.student_id;
+         delete req.body.student_id;
 
-      client.put(endpoint + "/" + req.body.id, args, function (data, response) {
+         var args = {
+             data: req.body,
+             headers: { "Content-Type": "application/json" }
+         };
 
-        if(response.statusCode != "200"){
-            req.addFlash("error", data.message);
-            return res.redirect('/update');
-        }
+         client.put(endpoint + "/" + studentId, args, function (data, response) {
 
-        req.addFlash("success", "Record updated successfully");
-        return res.redirect('/update');
+           if(response.statusCode != "200"){
+               req.addFlash("error", data.message);
+               return res.redirect('/update');
+           }
 
-      })
+           req.addFlash("success", "Record updated successfully");
+           return res.redirect('/update');
 
-    }
-  },
+         })
+
+       }
+     },
 
   /**
    * `StudentController.delete()`

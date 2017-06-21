@@ -6,7 +6,7 @@
  *
  * Here's what this you will need to do:
  *
- * 1. Inlclude the following DataTables css in layout.ejs
+ * 1.  Inlclude the following DataTables css in layout.ejs
  *    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.12/b-1.2.2/b-print-1.2.2/cr-1.3.2/datatables.min.css"/>
  *
  * 2. Include the following DataTables JavaScript in layout.ejs
@@ -34,8 +34,16 @@
 
    $(function(){
 
-   	//code goes here
-
+      $(document).ready(function(){
+          $('#employeeTable').DataTable({
+              dom: 'Bfrtip',
+              buttons: [
+                  'copy', 'csv', 'excel', 'pdf', 'print'
+              ],
+              colReorder: true,
+              "scrollX": true
+         });
+      })
    })
 
  })();

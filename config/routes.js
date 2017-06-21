@@ -47,4 +47,5 @@ module.exports.routes = {
   '/update':'StudentController.update',
   '/delete':'StudentController.delete'
 
+
 };

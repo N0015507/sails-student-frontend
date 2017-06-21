@@ -31,7 +31,29 @@
 
    $(function(){
 
-   	//code goes here
+      $('#delBtn').click(function(evt){
+         evt.preventDefault();
+         let delStudent = $("<p>Are you sure you want to delete this student?</p>").dialog({
+            title: "PLEASE VERIFY YOUR DATA",
+            buttons: {
+                    "Yes": function() {
+                      $("#deleteStudentForm").submit();
+                    },
+                    "No": function() {
+                      delStudent.dialog('close');
+                    }
+                  }
+            });
+      });
+
+      $('#student_id').selectpicker({
+        style: 'btn-info',
+        size: 10,
+        liveSearch: true,
+        header: 'Select a student'
+      });
+
+
 
    })
 
